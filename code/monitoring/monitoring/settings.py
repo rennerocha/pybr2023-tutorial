@@ -93,14 +93,14 @@ TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
 
 # Monitoring
-# SPIDERMON_ENABLED = True
+SPIDERMON_ENABLED = True
 
-# EXTENSIONS = {
-#     "spidermon.contrib.scrapy.extensions.Spidermon": 500,
-# }
+EXTENSIONS = {
+    "spidermon.contrib.scrapy.extensions.Spidermon": 500,
+}
 
-# SPIDERMON_SPIDER_CLOSE_MONITORS = ("monitoring.monitors.SpiderCloseMonitorSuite",)
+SPIDERMON_SPIDER_CLOSE_MONITORS = ("monitoring.monitors.SpiderCloseMonitorSuite",)
 
-# SPIDERMON_REPORT_TEMPLATE = "reports/email/monitors/result.jinja"
-# SPIDERMON_REPORT_CONTEXT = {"report_title": "Spidermon File Report"}
-# SPIDERMON_REPORT_FILENAME = "my_report.html"
+SPIDERMON_REPORT_TEMPLATE = "reports/email/monitors/result.jinja"
+SPIDERMON_REPORT_CONTEXT = {"report_title": "Spidermon File Report"}
+SPIDERMON_REPORT_FILENAME = "my_report.html"

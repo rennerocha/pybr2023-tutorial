@@ -111,7 +111,7 @@ class: center middle
 
 # Grupos de Usuários Python no Brasil
 
-``` python
+```python
 # code/groups-requests.py
 import requests
 from parsel import Selector
@@ -131,7 +131,7 @@ for url in start_urls:
 
 # Grupos de Usuários Python no Brasil
 
-```
+```bash
 $ python groups-requests.py
 PythonOnRio
 PyTche
@@ -191,21 +191,21 @@ https://scrapy.org/
 
 # Instalação (Linux)
 
-```
-$ git clone git@github.com:rennerocha/pybr-2023-tutorial.git pybr2023-tutorial
-$ cd pybr2023-tutorial
+```bash
+$ git clone https://github.com/rennerocha/pybr2023-tutorial.git tutorial
+$ cd tutorial
 $ python3 -m venv .venv
 $ source .venv/bin/activate
 $ cd code
-$ pip install -r requirements
+$ python -m pip install -r requirements
 
-(...) Várias linhas instalando várias coisas
+(...) Várias linhas instalando bibliotecas...
 
 $ scrapy version
 Scrapy 2.11.0
 ```
 
-https://github.com/rennerocha/pybr-2023-tutorial
+https://github.com/rennerocha/pybr2023-tutorial
 
 ---
 
@@ -230,20 +230,23 @@ Definem as regras de execução do seu raspador
 # Spiders
 
 ```python
-# code/ep2023.py
+# code/groups-scrapy.py
 import scrapy
 
-class EuroPython2023Spider(scrapy.Spider):
-    name = "europython"
+class PythonGroupsSpider(scrapy.Spider):
+    name = "pythongroups"
 
     start_urls = [
-        "https://ep2023.europython.eu/sessions",
-        "https://ep2023.europython.eu/tutorials",
+        "http://python.org.br",
     ]
 
     def parse(self, response):
-        for session in response.css("h2 a::text").getall():
-            yield {"title": session}
+       groups = response.css('.card')
+       for group in groups:
+           yield {
+               "name": group.css('h4::text').get(),
+               "links": group.css('a::attr(href)').getall(),
+           }
 ```
 
 ---
@@ -251,20 +254,23 @@ class EuroPython2023Spider(scrapy.Spider):
 # Spiders
 
 ```python
-# code/ep2023.py
+# code/groups-scrapy.py
 import scrapy
 
-*class EuroPython2023Spider(scrapy.Spider):
-    name = "europython"
+*class PythonGroupsSpider(scrapy.Spider):
+    name = "pythongroups"
 
     start_urls = [
-        "https://ep2023.europython.eu/sessions",
-        "https://ep2023.europython.eu/tutorials",
+        "http://python.org.br",
     ]
 
     def parse(self, response):
-        for session in response.css("h2 a::text").getall():
-            yield {"title": session}
+       groups = response.css('.card')
+       for group in groups:
+           yield {
+               "name": group.css('h4::text').get(),
+               "links": group.css('a::attr(href)').getall(),
+           }
 ```
 
 ---
@@ -272,20 +278,23 @@ import scrapy
 # Spiders
 
 ```python
-# code/ep2023.py
+# code/groups-scrapy.py
 import scrapy
 
-class EuroPython2023Spider(scrapy.Spider):
-*   name = "europython"
+class PythonGroupsSpider(scrapy.Spider):
+*   name = "pythongroups"
 
     start_urls = [
-        "https://ep2023.europython.eu/sessions",
-        "https://ep2023.europython.eu/tutorials",
+        "http://python.org.br",
     ]
 
     def parse(self, response):
-        for session in response.css("h2 a::text").getall():
-            yield {"title": session}
+       groups = response.css('.card')
+       for group in groups:
+           yield {
+               "name": group.css('h4::text').get(),
+               "links": group.css('a::attr(href)').getall(),
+           }
 ```
 
 ---
@@ -293,20 +302,23 @@ class EuroPython2023Spider(scrapy.Spider):
 # Spiders
 
 ```python
-# code/ep2023.py
+# code/groups-scrapy.py
 import scrapy
 
-class EuroPython2023Spider(scrapy.Spider):
-    name = "europython"
+class PythonGroupsSpider(scrapy.Spider):
+    name = "pythongroups"
 
 *   start_urls = [
-*       "https://ep2023.europython.eu/sessions",
-*       "https://ep2023.europython.eu/tutorials",
+*       "http://python.org.br",
 *   ]
 
     def parse(self, response):
-        for session in response.css("h2 a::text").getall():
-            yield {"title": session}
+       groups = response.css('.card')
+       for group in groups:
+           yield {
+               "name": group.css('h4::text').get(),
+               "links": group.css('a::attr(href)').getall(),
+           }
 ```
 
 ---
@@ -314,23 +326,26 @@ class EuroPython2023Spider(scrapy.Spider):
 # Spiders
 
 ```python
-# code/ep2023.py
+# code/groups-scrapy.py
 import scrapy
 
-class EuroPython2023Spider(scrapy.Spider):
-    name = "europython"
+class PythonGroupsSpider(scrapy.Spider):
+    name = "pythongroups"
 
 *   def start_requests(self):
 *       initial_urls = [
-*           "https://ep2023.europython.eu/sessions",
-*           "https://ep2023.europython.eu/tutorials",
+*           "http://python.org.br",
 *       ]
 *       for url in initial_urls:
 *           yield scrapy.Request(url)
 
     def parse(self, response):
-        for session in response.css("h2 a::text").getall():
-            yield {"title": session}
+       groups = response.css('.card')
+       for group in groups:
+           yield {
+               "name": group.css('h4::text').get(),
+               "links": group.css('a::attr(href)').getall(),
+           }
 ```
 
 ---
@@ -338,107 +353,67 @@ class EuroPython2023Spider(scrapy.Spider):
 # Spiders
 
 ```python
-# code/ep2023.py
+# code/groups-scrapy.py
 import scrapy
 
-class EuroPython2023Spider(scrapy.Spider):
-    name = "europython"
+class PythonGroupsSpider(scrapy.Spider):
+    name = "pythongroups"
 
     start_urls = [
-        "https://ep2023.europython.eu/sessions",
-        "https://ep2023.europython.eu/tutorials",
+        "http://python.org.br",
     ]
 
 *   def parse(self, response):
-*       for session in response.css("h2 a::text").getall():
-*           yield {"title": session}
+*      groups = response.css('.card')
+*      for group in groups:
+*          yield {
+*              "name": group.css('h4::text').get(),
+*              "links": group.css('a::attr(href)').getall(),
+*          }
 ```
 
 ---
 
 class: center, middle
 
-# Running the spider
+# Executando o Spider
 
 ---
 
-
-```
-$ scrapy runspider ep2023-scrapy.py
-2023-06-28 20:26:47 [scrapy.utils.log] INFO: Scrapy 2.9.0 started (bot: scrapybot)
-2023-06-28 20:26:47 [scrapy.utils.log] INFO: Versions: lxml 4.9.2.0, libxml2 2.9.14, cssselect 1.2.0, parsel 1.8.1, w3lib 2.1.1, Twisted 22.10.0, Python 3.11.3 (main, May 30 2023, 17:18:52) [GCC 11.3.0], pyOpenSSL 23.2.0 (OpenSSL 3.1.1 30 May 2023), cryptography 41.0.1, Platform Linux-5.15.0-75-generic-x86_64-with-glibc2.35
-2023-06-28 20:26:47 [scrapy.crawler] INFO: Overridden settings:
-{'HTTPCACHE_ENABLED': '0', 'SPIDER_LOADER_WARN_ONLY': True}
-
-(...)
-
-2023-06-28 20:26:48 [scrapy.core.engine] INFO: Spider opened
-2023-06-28 20:26:48 [scrapy.extensions.logstats] INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
-2023-06-28 20:26:48 [scrapy.extensions.telnet] INFO: Telnet console listening on 127.0.0.1:6023
-2023-06-28 20:26:48 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://ep2023.europython.eu/sessions> (referer: None)
-2023-06-28 20:26:48 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://ep2023.europython.eu/tutorials> (referer: None)
-2023-06-28 20:26:48 [scrapy.core.scraper] DEBUG: Scraped from <200 https://ep2023.europython.eu/sessions>
-{'title': 'The CPU in your browser: WebAssembly demystified'}
-2023-06-28 20:26:48 [scrapy.core.scraper] DEBUG: Scraped from <200 https://ep2023.europython.eu/sessions>
-{'title': 'GraphQL as an umbrella for microservices'}
-2023-06-28 20:26:48 [scrapy.core.scraper] DEBUG: Scraped from <200 https://ep2023.europython.eu/tutorials>
-{'title': 'Food For Rabbits: Celery From Zero to Hero'}
-2023-06-28 20:26:48 [scrapy.core.scraper] DEBUG: Scraped from <200 https://ep2023.europython.eu/sessions>
-{'title': 'Asyncio without Asyncio'}
-2023-06-28 20:26:48 [scrapy.core.scraper] DEBUG: Scraped from <200 https://ep2023.europython.eu/tutorials>
-{'title': 'Develop your Python cloud applications offline with LocalStack'}
+```bash
+$ scrapy runspider groups-scrapy.py
+2023-10-23 20:10:47 [scrapy.utils.log] INFO: Scrapy 2.11.0 started (bot: scrapybot)
+2023-10-23 20:10:47 [scrapy.utils.log] INFO: Versions: lxml 4.9.3.0, libxml2 2.10.3, cssselect 1.2.0, parsel 1.8.1, w3lib 2.1.2, Twisted 22.10.0, Python 3.10.10 (main, Feb 13 2023, 17:33:01) [GCC 11.3.0], pyOpenSSL 23.2.0 (OpenSSL 3.1.3 19 Sep 2023), cryptography 41.0.4, Platform Linux-5.15.0-87-generic-x86_64-with-glibc2.35
+2023-10-23 20:10:47 [scrapy.addons] INFO: Enabled addons:
+[]
 
 (...)
 
-2023-06-28 20:26:48 [scrapy.core.engine] INFO: Closing spider (finished)
-2023-06-28 20:26:48 [scrapy.statscollectors] INFO: Dumping Scrapy stats:
-2023-06-28 20:26:48 [scrapy.core.engine] INFO: Spider closed (finished)
-
-```
-
----
-
-```
-$ scrapy runspider ep2023-scrapy.py -s HTTPCACHE_ENABLED=1
-2023-06-28 20:30:15 [scrapy.utils.log] INFO: Scrapy 2.9.0 started (bot: scrapybot)
-2023-06-28 20:30:15 [scrapy.utils.log] INFO: Versions: lxml 4.9.2.0, libxml2 2.9.14, cssselect 1.2.0, parsel 1.8.1, w3lib 2.1.1, Twisted 22.10.0, Python 3.11.3 (main, May 30 2023, 17:18:52) [GCC 11.3.0], pyOpenSSL 23.2.0 (OpenSSL 3.1.1 30 May 2023), cryptography 41.0.1, Platform Linux-5.15.0-75-generic-x86_64-with-glibc2.35
-2023-06-28 20:30:15 [scrapy.crawler] INFO: Overridden settings:
-{'HTTPCACHE_ENABLED': '1', 'SPIDER_LOADER_WARN_ONLY': True}
+2023-10-23 20:10:47 [scrapy.core.engine] INFO: Spider opened
+2023-10-23 20:10:47 [scrapy.extensions.logstats] INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
+2023-10-23 20:10:47 [scrapy.extensions.telnet] INFO: Telnet console listening on 127.0.0.1:6023
+2023-10-23 20:37:01 [scrapy.core.scraper] DEBUG: Scraped from <200 http://python.org.br>
+{'name': 'PythonOnRio', 'links': ['http://pythonrio.python.org.br/', 'https://www.facebook.com/pythonrio', 'https://t.me/PythonRio', 'https://twitter.com/pythonrio', 'https://br.groups.yahoo.com/neo/groups/pythonrio/info']}
+2023-10-23 20:37:01 [scrapy.core.scraper] DEBUG: Scraped from <200 http://python.org.br>
+{'name': 'PyTche', 'links': ['http://www.meetup.com/pt/PyTche/', 'https://telegram.me/pytche']}
+2023-10-23 20:37:01 [scrapy.core.scraper] DEBUG: Scraped from <200 http://python.org.br>
+{'name': 'GruPy-GO', 'links': ['https://groups.google.com/forum/#!forum/grupy-go', 'https://t.me/grupygo', 'https://github.com/Grupy-GO', 'https://www.facebook.com/groups/grupygo/']}
 
 (...)
 
-2023-06-28 20:30:16 [scrapy.core.engine] INFO: Spider opened
-2023-06-28 20:30:16 [scrapy.extensions.logstats] INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
-2023-06-28 20:30:16 [scrapy.extensions.httpcache] DEBUG: Using filesystem cache storage in .scrapy/httpcache
-2023-06-28 20:30:16 [scrapy.extensions.telnet] INFO: Telnet console listening on 127.0.0.1:6023
-2023-06-28 20:30:16 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://ep2023.europython.eu/sessions> (referer: None) ['cached']
-2023-06-28 20:30:16 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://ep2023.europython.eu/tutorials> (referer: None) ['cached']
-2023-06-28 20:30:16 [scrapy.core.scraper] DEBUG: Scraped from <200 https://ep2023.europython.eu/sessions>
-{'title': 'The CPU in your browser: WebAssembly demystified'}
-2023-06-28 20:30:16 [scrapy.core.scraper] DEBUG: Scraped from <200 https://ep2023.europython.eu/sessions>
-{'title': 'Writing a Python interpreter from scratch, in half an hour.'}
-2023-06-28 20:30:16 [scrapy.core.scraper] DEBUG: Scraped from <200 https://ep2023.europython.eu/sessions>
-{'title': 'Rust for Python data engineers'}
-
-(...)
-```
-
-```
-$ ls -la .scrapy
-total 12
-drwxrwxr-x 3 renne renne 4096 jun 28 20:25 .
-drwxrwxr-x 4 renne renne 4096 jun 28 20:25 ..
-drwxrwxr-x 3 renne renne 4096 jun 28 20:25 httpcache
+2023-10-23 20:10:47 [scrapy.core.engine] INFO: Closing spider (finished)
+2023-10-23 20:10:47 [scrapy.statscollectors] INFO: Dumping Scrapy stats:
+2023-10-23 20:10:47 [scrapy.core.engine] INFO: Spider closed (finished)
 ```
 
 ---
 
 class: center, middle
-# Parsing Data
+# Extraindo Dados
 
 ---
 
-# CSS Selectors
+# Seletores CSS
 ### https://www.w3.org/TR/CSS2/selector.html
 
 # XPath
@@ -446,116 +421,159 @@ class: center, middle
 
 ---
 
-# Parsing Data
+# Extraindo Dados
 
 ```
-# code/parsing-data-css.py
+# code/parsing-css.py
 import scrapy
 
 
-class EuroPython2023Spider(scrapy.Spider):
-    name = "europython"
+class PythonGroupsSpider(scrapy.Spider):
+    name = "pythongroups"
 
     start_urls = [
-        "https://ep2023.europython.eu/sessions",
-        "https://ep2023.europython.eu/tutorials",
+        "http://python.org.br",
     ]
 
     def parse(self, response):
-        sessions = response.css(".mt-12")
-        for session in sessions:
+        groups = response.css('.card')
+        for group in groups:
             yield {
-                "title": session.css("h2 a::text").get(),
-                "presenter": session.css("p a::text").get(),
+                "name": group.css('h4::text').get(),
+                "links": group.css('a::attr(href)').getall(),
             }
 ```
 
 ---
 
-# Parsing Data
+# Extraindo Dados
 
 ```
-# code/parsing-data-css.py
+# code/parsing-css.py
 import scrapy
 
 
-class EuroPython2023Spider(scrapy.Spider):
-    name = "europython"
+class PythonGroupsSpider(scrapy.Spider):
+    name = "pythongroups"
 
     start_urls = [
-        "https://ep2023.europython.eu/sessions",
-        "https://ep2023.europython.eu/tutorials",
+        "http://python.org.br",
     ]
 
     def parse(self, response):
-*       sessions = response.css(".mt-12")
-        for session in sessions:
+*       groups = response.css('.card')
+        for group in groups:
             yield {
-*               "title": session.css("h2 a::text").get(),
-*               "presenter": session.css("p a::text").get(),
+*               "name": group.css('h4::text').get(),
+*               "links": group.css('a::attr(href)').getall(),
             }
 ```
 
-### CSS Selectors
-
 ---
 
-# Parsing Data
+# Extraindo Dados
 
 ```
-# code/parsing-data-xpath.py
+# code/parsing-xpath.py
 import scrapy
 
 
-class EuroPython2023Spider(scrapy.Spider):
-    name = "europython"
+class PythonGroupsSpider(scrapy.Spider):
+    name = "pythongroups"
 
     start_urls = [
-        "https://ep2023.europython.eu/sessions",
-        "https://ep2023.europython.eu/tutorials",
+        "http://python.org.br",
     ]
 
     def parse(self, response):
-*       sessions = response.xpath("//div[contains(@class, 'mt-12')]")
-        for session in sessions:
+        groups = response.xpath('//div[contains(@class, "card")]')
+        for group in groups:
             yield {
-*               "title": session.xpath("./h2/a/text()").get(),
-*               "presenter": session.xpath("./p/a/text()").get(),
+                "name": group.xpath('.//h4/text()').get(),
+                "links": group.xpath('.//a/@href').getall(),
             }
 ```
 
-### XPath
-
 ---
-# Parsing Data
+
+# Extraindo Dados
 
 ```
-# code/parsing-data-mixed.py
+# code/parsing-xpath.py
 import scrapy
 
 
-class EuroPython2023Spider(scrapy.Spider):
-    name = "europython"
+class PythonGroupsSpider(scrapy.Spider):
+    name = "pythongroups"
 
     start_urls = [
-        "https://ep2023.europython.eu/sessions",
-        "https://ep2023.europython.eu/tutorials",
+        "http://python.org.br",
     ]
 
     def parse(self, response):
-*       sessions = response.css(".mt-12")
-        for session in sessions:
+*       groups = response.xpath('//div[contains(@class, "card")]')
+        for group in groups:
             yield {
-*               "title": session.xpath("./h2/a/text()").get(),
-*               "presenter": session.xpath("./p/a/text()").get(),
+*               "name": group.xpath('.//h4/text()').get(),
+*               "links": group.xpath('.//a/@href').getall(),
             }
 ```
 
-### You are not limited to just one kind of selector
+---
+
+# Extraindo Dados
+
+```
+# code/parsing-mix.py
+import scrapy
+
+
+class PythonGroupsSpider(scrapy.Spider):
+    name = "pythongroups"
+
+    start_urls = [
+        "http://python.org.br",
+    ]
+
+    def parse(self, response):
+        groups = response.css('.card')
+        for group in groups:
+            yield {
+                "name": group.xpath('.//h4/text()').get(),
+                "links": group.xpath('.//a/@href').getall(),
+            }
+```
 
 ---
 
-# CSS Selectors Examples
+# Extraindo Dados
+
+```
+# code/parsing-mix.py
+import scrapy
+
+
+class PythonGroupsSpider(scrapy.Spider):
+    name = "pythongroups"
+
+    start_urls = [
+        "http://python.org.br",
+    ]
+
+    def parse(self, response):
+*       groups = response.css('.card')
+        for group in groups:
+            yield {
+*               "name": group.xpath('.//h4/text()').get(),
+*               "links": group.xpath('.//a/@href').getall(),
+            }
+```
+
+## Você pode usar vários tipos de seletores
+
+---
+
+# Exemplos de seletores CSS
 
 ```
 response.css("h1")
@@ -583,7 +601,7 @@ response.css("ul#offers .product p::text")
 
 ---
 
-# XPath Examples
+# Exemplos de XPath
 
 ```
 response.xpath("//h1")
@@ -610,46 +628,48 @@ response.xpath("//li[@class='ad']/following-sibling::li")
 ```
 ---
 
-# Exporting Results
+# Exportando os Resultados
 
 ```
-$ scrapy runspider ep2023-scrapy.py
+$ scrapy runspider groups-scrapy.py
+```
+
+---
+
+# Exportando os Resultados
+
+```
+$ scrapy runspider groups-scrapy.py
+```
+
+```
+$ scrapy runspider groups-scrapy.py -o results.csv
 ```
 ---
 
-# Exporting Results
+# Exportando os Resultados
 
 ```
-$ scrapy runspider ep2023-scrapy.py
-```
-
-```
-$ scrapy runspider ep2023-scrapy.py -o results.csv
-```
----
-# Exporting Results
-
-```
-$ scrapy runspider ep2023-scrapy.py
+$ scrapy runspider groups-scrapy.py
 ```
 
 ```
-$ scrapy runspider ep2023-scrapy.py -o results.csv
+$ scrapy runspider groups-scrapy.py -o results.csv
 ```
 
 ```
-$ scrapy runspider ep2023-scrapy.py -o results.json
+$ scrapy runspider groups-scrapy.py -o results.json
 ```
 
 ```
-$ scrapy runspider ep2023-scrapy.py -o results.jl
+$ scrapy runspider groups-scrapy.py -o results.jl
 ```
 
 ```
-$ scrapy runspider ep2023-scrapy.py -o results.xml
+$ scrapy runspider groups-scrapy.py -o results.xml
 ```
 
-### You can export in your own custom format if you like...
+### Você pode exportar em um formato customizado se você preferir...
 
 https://docs.scrapy.org/en/latest/topics/feed-exports.html#topics-feed-exports
 
@@ -661,20 +681,22 @@ class: center, middle
 ---
 
 class: center, middle
-We will use http://toscrape.com/, a sandbox containing fictional websites
-with a simplified version of real world challenges we find during web scraping tasks.
+
+Nos próximos exercícios utilizaremos o conteúdo de http://toscrape.com/, que é um playground
+com diversos desafios simplificados de problemas encontrados no mundo real para projetos
+de raspagem de dados.
 
 ---
 
-# Exercise 1
+# Exercício 1
 
-**Target:** https://quotes.toscrape.com/
+**Alvo:** https://quotes.toscrape.com/
 
-On this page, you will find a collection of quotes along with their respective authors.
-Each quote is accompanied by a link that directs you to a dedicated page providing
-additional details about the author, the quote itself, and a list of associated tags.
+Nesta página, você irá encontrar uma coleção de citações junto com os seus respectivos
+autores. Cada citação é acompanhada por um link que redirecion você a uma página dedicada
+fornecendo detalhes adicionais do autor, a ciração e uma lista de tags associados.
 
-Your task is to extract all of this information and export it into a JSON lines file.
+Sua tarefa é extrair todas essas informações e exportá-la em um arquivo JSON.
 
 ---
 <img class="fragment" src="images/exercise-1-page.png" width="100%">
@@ -683,20 +705,20 @@ Your task is to extract all of this information and export it into a JSON lines 
 <img class="fragment" src="images/exercise-1-sc.png" width="100%">
 ---
 
-# Exercise 1
+# Exercício 1
 
-**Target:** https://quotes.toscrape.com/
+**Alvo:** https://quotes.toscrape.com/
 
-On this page, you will find a collection of quotes along with their respective authors.
-Each quote is accompanied by a link that directs you to a dedicated page providing
-additional details about the author, the quote itself, and a list of associated tags.
+Nesta página, você irá encontrar uma coleção de citações junto com os seus respectivos
+autores. Cada citação é acompanhada por um link que redirecion você a uma página dedicada
+fornecendo detalhes adicionais do autor, a ciração e uma lista de tags associados.
 
-Your task is to extract all of this information and export it into a JSON lines file.
+Sua tarefa é extrair todas essas informações e exportá-la em um arquivo JSON.
 
-**TIP**: your parse method can be used to yield items or schedule new requests for later processing.
+**TIP**: seu método `parse` pode retornar items ou agendar novo requests para processamento futuro
 
 ```
-# if callback is not provided, the default is self.parse
+# se o `callback` não é fornecido, o padrão é o método `parse`
 scrapy.Request("https://someurl.com", callback=self.parse_someurl)
 ```
 ---
@@ -925,22 +947,21 @@ class QuotesSpider(scrapy.Spider):
 ```
 ---
 
-# Exercise 2
+# Exercício 2
 
-**Target:** https://quotes.toscrape.com/scroll
+**Alvo:** https://quotes.toscrape.com/scroll
 
-There has been another modification to the layout. Our quotes page now features an infinite
-scroll functionality, meaning that new content is dynamically loaded as you reach the bottom of the page.
+Houve uma modificação no layout do site anterior. Agora, nossas citações aparecem em um
+scroll infinito. O que significa que o novo conteúdo é carregado dinamicamente quando você
+atinge a parte inferior da página.
 
-**TIP**: To understand this behavior, open your browser and access our target page. Press **F12** to
-open the developer tools and select the "_Network_" tab. Observe what occurs in the network requests
-when you navigate to the end of the page.
+**DICA**: Para compreender esse comportamento, abra o seu navegador e acesse nossa página alvo.
+Em seguida pressione **F12** para abrir as ferramentas de desenvolvimento e seleciona a aba
+"_Network_". Observe o que acontece nos requests quando vocÇe navega para o fim da página.
 
 ---
 
-
 <img class="fragment" src="images/exercise-2-scroll.gif" width="100%">
-
 
 ---
 
@@ -1132,15 +1153,15 @@ class QuotesScrollSpider(scrapy.Spider):
 
 ---
 
-# Exercise 3
+# Excercício 3
 
-**Target:** https://quotes.toscrape.com/js/
+**Alvo:** https://quotes.toscrape.com/js/
 
-The spider you created in the first exercise has ceased to function. Although no errors
-are evident in the logs, the spider is not returning any data.
+O spider que você criou no primeiro exercício parou de funcionar. Embora não apareça
+nenhum erro nos logs, nenhum dado está sendo retornado.
 
-**TIP**: To troubleshoot, open your browser and navigate to our target page.
-Press **Ctrl+U** (_View Page Source_) to inspect the HTML content of the page.
+**DICA**: iPara iniciar a investigação do problema, abra o seu navegador na página alvo.
+Pressione **Ctrl+U** (_Ver código fonte_) para inspecionar o HTML da página.
 
 ---
 
@@ -1305,14 +1326,15 @@ class QuotesJSSpider(scrapy.Spider):
 
 ---
 
-# Exercise 4
+# Exercício 4
 
-**Target:** http://quotes.toscrape.com/search.aspx
+**Alvo:** http://quotes.toscrape.com/search.aspx
 
-This site is a bit different. We have two select boxes where we choose one
-author, and then we can choose one tag that has a quote associate with them.
+Este site é um pouco diferente. Nós temos duas caixas de seleção onde escolhemos
+um autor, e então podemos selecionar uma tag que esteja associado com uma citação
+do autor selecionado.
 
-**TIP**: `scrapy.FormRequest` can be used for dealing with HTML forms.
+**DICA**: `scrapy.FormRequest` pode ser usado para lidar com formulários HTML.
 
 ```
 scrapy.FormRequest("https://someurl.com", formdata={"form_data": "value"})
@@ -1597,46 +1619,47 @@ class QuotesViewStateSpider(scrapy.Spider):
 ```
 ---
 
-# Monitoring
+# Monitorando
 
-- We need to ensure that we are extracting the data we need, so monitoring the execution of your spiders is crucial
+- Precisamos garantir que estamos extraíndo os dados que precisamos, então monitorar a execução dos seus spiders é crucial
 
-- Spidermon is a Scrapy extension that helps us to **monitor** our spiders and take **actions** based on the results of the execution of them
+- Spidermon é uma extensão do Scrapy que te ajuda a **monitorar** nossos spiders e tomar **ações** baseadas nos resultados
 
 - https://spidermon.readthedocs.io/
 
 ---
 
 class: center, middle
-# Beyond the spiders
+
+# Além dos Spiders
 
 ---
 
 # Proxies
 
-- Avoid IP bans and anti-bot services
+- Evitam que seu IP seja banido e serviços anti-bot
 
-- Large scale scraping
+- Utilizados em raspagens de larga escala
 
-- Access region-specific content
+- Acesso a conteúdo limitado regionalmente
 
 - Datacenter vs residential vs mobile proxies
 
-- Easily integrated with Scrapy using extensions
+- Facilmente integrago com Scrapy com o use de extensões
 
 ---
 
-# Headless browsers
+# Navegadores Headless
 
-- Primarily for accessing websites that heavily rely on Javascript-rendered content using frameworks like React, Vue, and Angular
+- Usados principalmente em páginas que dependem pesadamente de conteúdo renderizado com Javascript usando frameworks como React, Vue e Angular
 
-- Since it utilizes a real browser (even if it doesn't render the UI), web crawlers using headless browsers are typically slower and challenging to scale
+- Como utilizam um navegador real (mesmo que não tenham um interface gráfica visível), raspadores utilizando navegadores headless geralmente são mais lentos e complicados de escalar
 
-- Existing solutions are often designed for automated testing rather than web scraping
+- As soluções existentes são desenvolvidas normalmente para testes automatizados e não para raspagem de dados
 
 ---
 
-# Headless browsers
+# Navegadores Headless
 
 - **Selenium** (https://www.selenium.dev/)
 
@@ -1700,15 +1723,16 @@ class QuotesPlaywrightSpider(scrapy.Spider):
 
 ---
 
-# What else you should worry?
+# O que mais você precisa se preocupar?
 
-- Be polite, don't scrape to fast that interfire in the target website operation
 
-- Follow the terms of service of the website
+- Seja educado. Não raspe tão rápido a ponto de interferir na operação do seu site alvo
 
-- Be careful when scraping personal data
+- Siga os termos de serviço da página
 
-- Is it legal?
+- Seja cuidadoso ao raspar dados pessoais
+
+- É ilegal?
 
 ---
 
