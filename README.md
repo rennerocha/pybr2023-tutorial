@@ -15,7 +15,7 @@ valiosas de sites.
 ## Antes do tutorial
 
 Clone este repositório para ter acesso à apresentação e também à solução do código dos exercícios sugeridos:
-https://github.com/rennerocha/europython-2023-gathering-data-tutorial
+[https://github.com/rennerocha/pybr2023-tutorial](https://github.com/rennerocha/pybr2023-tutorial)
 
 Durante o tutorial espera-se que você tente resolver alguns pequenos exercícios usando
 [Scrapy](https://scrapy.org), um framework de web scraping. Será a única biblioteca necessária para ser instalada
@@ -36,3 +36,5 @@ $ source .venv/bin/activate
 $ cd code
 $ python -m pip install -r requirements
 ```
+
+Em outras plataformas, siga a documentação oficial do Scrapy com o [guia de instatlação](https://docs.scrapy.org/en/latest/intro/install.html)
